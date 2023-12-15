@@ -12,7 +12,4 @@ export const defaultTheme = {
     'base-background': '#071422',
     'base-input': '#040F1A',
   },
-  font: {
-    family: 'Nunito',
-  },
-}
+} as const
