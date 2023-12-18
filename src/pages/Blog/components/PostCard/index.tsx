@@ -8,7 +8,7 @@ import {
 
 export function PostCard() {
   return (
-    <PostCardContainer to="/">
+    <PostCardContainer to="/post">
       <PostCardHeader>
         <PostCardTitle>JavaScript data types and data structures</PostCardTitle>
         <PostCardPublishTime>Há 1 dia</PostCardPublishTime>
