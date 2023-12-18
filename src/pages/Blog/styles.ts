@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
-export const BlogContainer = styled.div``
-
-export const PostsContainer = styled.div``
+export const PostsContainer = styled.main`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
+`

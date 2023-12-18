@@ -1,23 +1,23 @@
-import { Post } from './components/Post'
+import { PostCard } from './components/PostCard'
 import { Profile } from './components/Profile'
 import { SearchForm } from './components/SearchForm'
-import { BlogContainer, PostsContainer } from './styles'
+import { PostsContainer } from './styles'
 
 export function Blog() {
   return (
-    <BlogContainer>
+    <>
       <Profile />
 
-      <PostsContainer>
-        <SearchForm />
+      <SearchForm />
 
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+      <PostsContainer>
+        <PostCard />
+        <PostCard />
+        <PostCard />
+        <PostCard />
+        <PostCard />
+        <PostCard />
       </PostsContainer>
-    </BlogContainer>
+    </>
   )
 }
