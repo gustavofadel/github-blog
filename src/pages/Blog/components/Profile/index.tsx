@@ -5,8 +5,10 @@ import {
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useContext } from 'react'
 import { Badge } from '../../../../components/Badge'
 import { Link } from '../../../../components/Link'
+import { UserContext } from '../../../../contexts/UserContext'
 import {
   AvatarContainer,
   AvatarImage,
@@ -19,40 +21,38 @@ import {
 } from './styles'
 
 export function Profile() {
+  const { user } = useContext(UserContext)
+
   return (
     <ProfileContainer>
       <AvatarContainer>
-        <AvatarImage src="https://github.com/gustavofadel.png" />
+        <AvatarImage src={user.avatar_url} />
       </AvatarContainer>
 
       <ProfileContent>
         <ProfileInfo>
-          <Link
-            href="https://github.com/gustavofadel"
-            role="link"
-            target="_blank"
-          >
+          <Link href={user.profile_url} role="link" target="_blank">
             GITHUB
             <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
           </Link>
 
-          <ProfileName>Gustavo Fadel</ProfileName>
+          <ProfileName>{user.name}</ProfileName>
         </ProfileInfo>
 
-        <ProfileDescription>Uma descrição aqui</ProfileDescription>
+        <ProfileDescription>{user.bio}</ProfileDescription>
 
         <BadgeGroup>
           <Badge
             icon={<FontAwesomeIcon icon={faGithub} />}
-            text="gustavofadel"
+            text={user.username}
           />
           <Badge
             icon={<FontAwesomeIcon icon={faBuilding} />}
-            text="LUDUS Lab"
+            text={user.company}
           />
           <Badge
             icon={<FontAwesomeIcon icon={faUserGroup} />}
-            text="46 seguidores"
+            text={`${user.followers} seguidores`}
           />
         </BadgeGroup>
       </ProfileContent>
