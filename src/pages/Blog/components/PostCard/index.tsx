@@ -1,3 +1,4 @@
+import { Post } from '../../../../contexts/PostsContext'
 import {
   PostCardBody,
   PostCardContainer,
@@ -6,24 +7,19 @@ import {
   PostCardTitle,
 } from './styles'
 
-export function PostCard() {
+interface PostCardProps {
+  post: Post
+}
+
+export function PostCard({ post }: PostCardProps) {
   return (
     <PostCardContainer to="/post">
       <PostCardHeader>
-        <PostCardTitle>JavaScript data types and data structures</PostCardTitle>
-        <PostCardPublishTime>Há 1 dia</PostCardPublishTime>
+        <PostCardTitle>{post.title}</PostCardTitle>
+        <PostCardPublishTime>{post.publishTime}</PostCardPublishTime>
       </PostCardHeader>
 
-      <PostCardBody>
-        Programming languages all have built-in data structures, but these often
-        differ from one language to another. This article attempts to list the
-        built-in data structures available in JavaScript and what properties
-        they have. These can be used to build other data structures. Wherever
-        possible, comparisons with other languages are drawn. Dynamic typing
-        JavaScript is a loosely typed and dynamic language. Variables in
-        JavaScript are not directly associated with any particular value type,
-        and any variable can be assigned (and re-assigned) values of all types.
-      </PostCardBody>
+      <PostCardBody>{post.body}</PostCardBody>
     </PostCardContainer>
   )
 }
