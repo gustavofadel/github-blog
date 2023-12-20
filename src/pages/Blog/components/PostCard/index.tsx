@@ -13,7 +13,7 @@ interface PostCardProps {
 
 export function PostCard({ post }: PostCardProps) {
   return (
-    <PostCardContainer to="/post">
+    <PostCardContainer to={post.link}>
       <PostCardHeader>
         <PostCardTitle>{post.title}</PostCardTitle>
         <PostCardPublishTime>{post.publishTime}</PostCardPublishTime>
