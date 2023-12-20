@@ -1,4 +1,6 @@
 import * as Label from '@radix-ui/react-label'
+import { useContext } from 'react'
+import { PostsContext } from '../../../../contexts/PostsContext'
 import {
   PostCountText,
   SearchBar,
@@ -7,6 +9,9 @@ import {
 } from './styles'
 
 export function SearchForm() {
+  const { postsCount, searchPosts } = useContext(PostsContext)
+  const postsText = postsCount === 1 ? 'publicação' : 'publicações'
+
   return (
     <SearchFormContainer>
       <SearchFormHeader>
@@ -14,10 +19,17 @@ export function SearchForm() {
           Publicações
         </Label.Root>
 
-        <PostCountText>6 publicações</PostCountText>
+        <PostCountText>
+          {postsCount} {postsText}
+        </PostCountText>
       </SearchFormHeader>
 
-      <SearchBar placeholder="Buscar conteúdo" type="text" id="search" />
+      <SearchBar
+        placeholder="Buscar conteúdo"
+        type="text"
+        id="search"
+        onChange={(event) => searchPosts(event.target.value)}
+      />
     </SearchFormContainer>
   )
 }

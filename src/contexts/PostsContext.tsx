@@ -33,6 +33,8 @@ export interface Post {
 
 interface PostsContextType {
   posts: Post[]
+  postsCount: number
+  searchPosts: (query: string) => void
 }
 
 interface PostsProviderProps {
@@ -44,46 +46,64 @@ export const PostsContext = createContext<PostsContextType>(
 )
 
 export function PostsProvider({ children }: PostsProviderProps) {
+  const [initialPosts, setInitialPosts] = useState<Post[]>([])
   const [posts, setPosts] = useState<Post[]>([])
 
   const fetchPosts = useCallback(async () => {
     await api
       .get<FetchPostsResponse>(import.meta.env.VITE_POSTS_ENDPOINT)
       .then(({ data }) => {
-        setPosts(
-          data.items.map((post) => {
-            const { id, number, title, body, created_at } = post
+        const parsedPosts: Post[] = data.items.map((post) => {
+          const { id, number, title, body, created_at } = post
 
-            const formattedBody = body.slice(0, 200)
+          const formattedBody = body.slice(0, 200)
 
-            const slug = title.toLowerCase().replace(/ /g, '-')
+          const slug = title.toLowerCase().replace(/ /g, '-')
 
-            const publishTime = formatDistanceToNow(new Date(created_at), {
-              addSuffix: true,
-              locale: ptBR,
-            })
+          const publishTime = formatDistanceToNow(new Date(created_at), {
+            addSuffix: true,
+            locale: ptBR,
+          })
 
-            const link = `post/${slug}`
+          const link = `post/${slug}`
 
-            return {
-              body: formattedBody,
-              id,
-              link,
-              number,
-              publishTime,
-              slug,
-              title,
-            }
-          }),
-        )
+          return {
+            body: formattedBody,
+            id,
+            link,
+            number,
+            publishTime,
+            slug,
+            title,
+          }
+        })
+
+        setInitialPosts(parsedPosts)
+        setPosts(parsedPosts)
       })
   }, [])
+
+  function searchPosts(query: string) {
+    if (query === '') {
+      return setPosts(initialPosts)
+    }
+
+    setPosts(
+      posts.filter((post) =>
+        post.title.toLowerCase().includes(query.toLowerCase()),
+      ),
+    )
+  }
+
+  const postsCount = posts.length
 
   useEffect(() => {
     fetchPosts()
   }, [fetchPosts])
 
   return (
-    <PostsContext.Provider value={{ posts }}>{children}</PostsContext.Provider>
+    <PostsContext.Provider value={{ posts, searchPosts, postsCount }}>
+      {children}
+    </PostsContext.Provider>
   )
 }
